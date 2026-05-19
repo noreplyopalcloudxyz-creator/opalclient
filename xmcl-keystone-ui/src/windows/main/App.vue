@@ -23,6 +23,7 @@
     </div>
     <AppContextMenu />
     <AppNotifier />
+    <SettingUpdateInfoDialog />
     <AppCommandPalette />
     <AppFeedbackDialog />
     <AppTaskDialog />
@@ -66,6 +67,8 @@ import { kInstance } from '@/composables/instance'
 import { kLaunchButton, useLaunchButton } from '@/composables/launchButton'
 import { kLocalizedContent, useLocalizedContentControl } from '@/composables/localizedContent'
 import { useNotifier } from '@/composables/notifier'
+import { useDialog } from '@/composables/dialog'
+import { useI18n } from 'vue-i18n'
 import { kCompact } from '@/composables/scrollTop'
 import { kSettingsState } from '@/composables/setting'
 import { kTheme } from '@/composables/theme'
@@ -82,6 +85,7 @@ import AppExportServerDialog from '@/views/AppExportServerDialog.vue'
 import AppFeedbackDialog from '@/views/AppFeedbackDialog.vue'
 import AppGameExitDialog from '@/views/AppGameExitDialog.vue'
 import AppInstallSkipDialog from '@/views/AppInstallSkipDialog.vue'
+import SettingUpdateInfoDialog from '@/views/SettingUpdateInfoDialog.vue'
 import AppInstanceDeleteDialog from '@/views/AppInstanceDeleteDialog.vue'
 import AppLaunchBlockedDialog from '@/views/AppLaunchBlockedDialog.vue'
 import AppUnauthenticatedWarningDialog from '@/views/AppUnauthenticatedWarningDialog.vue'
@@ -174,6 +178,10 @@ const headerHeight = ref(0)
 provide('headerHeight', headerHeight)
 
 const { appBarColor, dark } = injection(kTheme)
+const { t } = useI18n()
+const { show: showUpdateInfo } = useDialog('update-info')
+const pendingUpdateNotified = ref('')
+const readyUpdateNotified = ref('')
 
 watch(dark, (newVal) => {
   state.value?.themeSet(newVal === 'system' ? newVal : newVal ? 'dark' : 'light')
@@ -203,6 +211,59 @@ const { isDark } = injection(kTheme)
 
 // Notifier
 const { notify } = useNotifier()
+
+const notifyUpdateAvailable = (info: any) => {
+  notify({
+    level: info.force ? 'warning' : 'info',
+    title: info.force ? t('setting.requiredUpdateNotice') : `Launcher update available: ${info.name}`,
+    body: info.force ? info.forceMessage || '' : `A new launcher version ${info.name} is available.`,
+    operations: [
+      {
+        text: t('launcherUpdate.updateToThisVersion'),
+        icon: 'system_update',
+        handler: () => showUpdateInfo(),
+      },
+    ],
+  })
+}
+
+const notifyReadyToInstall = (info: any) => {
+  notify({
+    level: 'success',
+    title: `Launcher update ready: ${info.name}`,
+    body: `The update is downloaded and ready to install.`,
+    operations: [
+      {
+        text: t('launcherUpdate.installAndQuit'),
+        icon: 'refresh',
+        handler: () => showUpdateInfo(),
+      },
+    ],
+  })
+}
+
+watch(
+  () => state.value?.updateStatus,
+  (status) => {
+    const info = state.value?.updateInfo
+    if (!info?.name) {
+      return
+    }
+    if (status === 'pending' && pendingUpdateNotified.value !== info.name) {
+      pendingUpdateNotified.value = info.name
+      notifyUpdateAvailable(info)
+      if (info.force) {
+        showUpdateInfo()
+      }
+    }
+    if (status === 'ready' && readyUpdateNotified.value !== info.name) {
+      readyUpdateNotified.value = info.name
+      notifyReadyToInstall(info)
+    }
+  },
+  { immediate: true }
+)
+
 useDefaultErrorHandler(notify)
 useAuthProfileImportNotification(notify)
 </script>

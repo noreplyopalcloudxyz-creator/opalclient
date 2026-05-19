@@ -5,8 +5,8 @@ import type { Configuration } from 'electron-builder'
 dotenv()
 
 export const config = {
-  productName: 'X Minecraft Launcher',
-  appId: 'xmcl',
+  productName: 'Opal Launcher',
+  appId: 'com.opal.launcher',
   directories: {
     output: 'build/output',
     buildResources: 'build',
@@ -20,8 +20,8 @@ export const config = {
   // set this to your own repo!
   publish: [{
     provider: 'github',
-    owner: 'voxelum',
-    repo: 'x-minecraft-launcher',
+    owner: 'noreplyopalcloudxyz-creator',
+    repo: 'opalclient',
   }],
   files: [{
     from: 'dist',
@@ -32,11 +32,11 @@ export const config = {
     to: '.',
     filter: 'package.json',
   }],
-  artifactName: 'xmcl-${version}-${platform}-${arch}.${ext}',
+  artifactName: 'opal-launcher-${version}-${platform}-${arch}.${ext}',
   appx: {
-    displayName: 'X Minecraft Launcher',
-    applicationId: 'xmcl',
-    identityName: 'xmcl',
+    displayName: 'Opal Launcher',
+    applicationId: 'com.opal.launcher',
+    identityName: 'opal-launcher',
     backgroundColor: 'transparent',
     publisher: process.env.PUBLISHER,
     publisherDisplayName: 'CI010',
@@ -80,14 +80,29 @@ export const config = {
     icon: 'icons/dark.ico',
     target: [
       {
+        target: 'nsis',
+        arch: [
+          'x64',
+          'ia32',
+        ],
+      },
+      {
         target: 'zip',
         arch: [
           'x64',
           'ia32',
         ],
       },
-      'appx',
     ],
+  },
+  nsis: {
+    oneClick: false,
+    perMachine: false,
+    allowElevation: true,
+    allowToChangeInstallationDirectory: true,
+    createDesktopShortcut: true,
+    createStartMenuShortcut: true,
+    shortcutName: 'Opal Launcher',
   },
   linux: {
     executableName: 'xmcl',

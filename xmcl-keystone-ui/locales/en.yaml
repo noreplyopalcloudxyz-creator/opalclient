@@ -1644,7 +1644,7 @@ userServices:
     password: Password
   offline:
     account: Username
-    name: Offline
+    name: Offline Account
     password: No Password
     uuid: User UUID (Optional)
 userSkin:

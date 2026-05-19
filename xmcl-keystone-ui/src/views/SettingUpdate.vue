@@ -80,6 +80,20 @@
       </template>
     </SettingItem>
 
+    <v-alert
+      v-if="hasNewUpdate"
+      :type="forceUpdate ? 'error' : 'info'"
+      variant="tonal"
+      class="mb-4"
+    >
+      <div>
+        {{ forceUpdate ? t('setting.requiredUpdateNotice') : `A launcher update ${updateInfo?.name} is available.` }}
+      </div>
+      <div v-if="forceUpdate && updateInfo?.forceMessage" class="mt-2">
+        {{ updateInfo.forceMessage }}
+      </div>
+    </v-alert>
+
     <SettingItem
       :title="t('setting.autoInstallOnAppQuit')"
       :description="t('setting.autoInstallOnAppQuitDescription')"

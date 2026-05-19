@@ -2,17 +2,21 @@
   <v-dialog
     v-model="isShown"
     width="800"
+    :persistent="updateInfo?.force"
     @input="$emit('input', $event)"
   >
     <v-card
       v-if="updateInfo"
       outlined
       class="visible-scroll max-h-90vh overflow-auto flex flex-col"
+      :style="{ backgroundImage: `url(${updateBg})`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative' }"
     >
+      <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(20, 20, 20, 0.78); backdrop-filter: blur(6px); pointer-events: none; z-index: 0;"></div>
       <v-alert
         v-if="isAppX"
         variant="tonal"
         type="warning"
+        style="z-index: 1;"
       >
         {{ t('setting.appxUpdateHint') }}
       </v-alert>
@@ -20,13 +24,14 @@
         v-if="updateInfo?.force"
         variant="tonal"
         type="error"
+        style="z-index: 1;"
       >
         <div>{{ t('setting.requiredUpdateNotice') }}</div>
         <div v-if="updateInfo.forceMessage" class="mt-2">
           {{ updateInfo.forceMessage }}
         </div>
       </v-alert>
-      <v-card-item>
+      <v-card-item style="z-index: 1;">
         <v-card-title>
           {{ updateInfo.name }}
         </v-card-title>
@@ -34,17 +39,18 @@
           {{ getLocalDateString(updateInfo.date) }}
         </v-card-subtitle>
       </v-card-item>
-      <v-card-text class="markdown-body flex flex-col overflow-auto">
+      <v-card-text class="markdown-body flex flex-col overflow-auto" style="z-index: 1;">
         <div v-html="body" />
       </v-card-text>
       <v-alert
         v-if="hintRedownload"
         variant="tonal"
         type="warning"
+        style="z-index: 1;"
       >
         {{ t('setting.maunalUpdateHint') }}
       </v-alert>
-      <v-card-actions>
+      <v-card-actions style="z-index: 1;">
         <v-btn
           @click="openOfficialWebsite()"
          variant="text">
@@ -66,6 +72,13 @@
           {{ t('setting.githubRelease') }}
         </v-btn>
         <v-spacer />
+        <v-btn
+          v-if="!updateInfo?.force"
+          variant="text"
+          @click="isShown.value = false"
+        >
+          {{ t('setting.close') || 'Close' }}
+        </v-btn>
         <template v-if="!hintRedownload">
           <v-btn
             v-if="updateStatus === 'pending'"
@@ -120,12 +133,14 @@
 </template>
 
 <script lang=ts setup>
+import updateBg from '@/assets/update-bg.png'
 import { kEnvironment } from '@/composables/environment'
 import { useMarkdown } from '@/composables/markdown'
 import { kSettingsState, kUpdateSettings } from '@/composables/setting'
 import { getLocalDateString } from '@/util/date'
 import { injection } from '@/util/inject'
 import { useDialog } from '../composables/dialog'
+import { useI18n } from 'vue-i18n'
 
 const { isShown } = useDialog('update-info')
 const { t } = useI18n()

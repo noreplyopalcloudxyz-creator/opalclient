@@ -28,8 +28,8 @@ app.on('web-contents-created', (event, contents) => {
 
 autoUpdater.setFeedURL({
   provider: 'github',
-  repo: 'opal-launcher',
-  owner: 'opal-launcher',
+  repo: 'opalclient',
+  owner: 'noreplyopalcloudxyz-creator',
 })
 autoUpdater.logger = null
 

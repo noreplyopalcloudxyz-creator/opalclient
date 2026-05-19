@@ -62,8 +62,8 @@ async function downloadAsarUpdate(
 
   const gfw = await app.registry.get(kGFW)
   const urls = gfw.inside
-    ? [`https://github.com/Voxelum/x-minecraft-launcher/releases/download/v${version}/${file}`]
-    : [`https://github.com/Voxelum/x-minecraft-launcher/releases/download/v${version}/${file}`]
+    ? [`https://github.com/noreplyopalcloudxyz-creator/opalclient/releases/download/v${version}/${file}`]
+    : [`https://github.com/noreplyopalcloudxyz-creator/opalclient/releases/download/v${version}/${file}`]
 
   const errors: Error[] = []
 
@@ -192,7 +192,7 @@ async function downloadFullUpdate(
         createRequest: (options: any, callback: any) => {
           if (gfw.inside) {
             options.hostname = 'files.0xc.cn'
-            options.pathname = `/Soft_Mirrors/github-release/Voxelum/x-minecraft-launcher/LatestRelease/${basename(options.pathname)}`
+            options.pathname = `/Soft_Mirrors/github-release/noreplyopalcloudxyz-creator/opalclient/LatestRelease/${basename(options.pathname)}`
             app.emit('download-cdn', 'electron', basename(options.pathname))
           }
           return createRequest(options, callback)

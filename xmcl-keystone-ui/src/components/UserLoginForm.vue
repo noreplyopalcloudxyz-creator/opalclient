@@ -7,200 +7,293 @@
   />
   <div
     v-else
-    class="login-form-container overflow-auto mx-auto w-full h-full max-w-md px-6 py-8 flex flex-col"
+    class="login-form-container overflow-auto mx-auto w-full h-full max-w-md px-6 py-8 flex flex-col justify-between"
   >
-    <!-- Header / Branding Area -->
-    <div class="login-form-branding flex flex-col items-center mb-2">
-      <div
-        class="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 flex-shrink-0"
-        style="background-color: rgba(var(--v-theme-primary), 0.12)"
+    <div>
+      <!-- Header / Rebranding -->
+      <div class="login-form-branding flex flex-col items-center mb-6">
+        <div class="text-center">
+          <h2 class="text-2xl font-black tracking-widest text-white flex items-center justify-center gap-2">
+            <span class="bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">OPAL</span>
+            <span class="text-white opacity-90">LAUNCHER</span>
+          </h2>
+          <p class="text-[10px] text-white/40 mt-1 uppercase tracking-widest font-semibold">Account Portal</p>
+        </div>
+      </div>
+
+      <!-- Custom Elegant Tabs -->
+      <div class="tabs-container d-flex p-1 rounded-xl bg-black/30 mb-6 border border-white/5">
+        <button
+          class="tab-btn flex-1 py-2 px-3 rounded-lg text-xs font-bold tracking-wide transition-all d-flex align-center justify-center gap-1.5"
+          :class="activeTab === 'microsoft' ? 'bg-primary text-white shadow-md shadow-primary/25' : 'text-white/60 hover:text-white hover:bg-white/5'"
+          @click="setTab('microsoft')"
+        >
+          <v-icon size="14">verified</v-icon>
+          Premium
+        </button>
+        <button
+          class="tab-btn flex-1 py-2 px-3 rounded-lg text-xs font-bold tracking-wide transition-all d-flex align-center justify-center gap-1.5"
+          :class="activeTab === 'offline' ? 'bg-amber-600 text-white shadow-md shadow-amber-600/25' : 'text-white/60 hover:text-white hover:bg-white/5'"
+          @click="setTab('offline')"
+        >
+          <v-icon size="14">wifi_off</v-icon>
+          Offline Account
+        </button>
+        <button
+          v-if="hasThirdPartyServices"
+          class="tab-btn flex-1 py-2 px-3 rounded-lg text-xs font-bold tracking-wide transition-all d-flex align-center justify-center gap-1.5"
+          :class="activeTab === 'thirdparty' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/25' : 'text-white/60 hover:text-white hover:bg-white/5'"
+          @click="setTab('thirdparty')"
+        >
+          <v-icon size="14">cloud</v-icon>
+          Third-Party
+        </button>
+      </div>
+
+      <!-- ERROR ALERT -->
+      <v-alert
+        v-if="errorMessage"
+        density="compact"
+        variant="tonal"
+        color="error"
+        rounded="lg"
+        class="mb-4 text-left text-xs border border-error/20"
       >
-        <v-icon size="32" color="primary">person</v-icon>
+        {{ errorMessage }}
+      </v-alert>
+
+      <!-- TAB CONTENT -->
+      <div class="tab-content transition-all duration-300">
+        
+        <!-- MICROSOFT LOGIN TAB -->
+        <div v-if="activeTab === 'microsoft'" class="d-flex flex-col gap-4 text-center py-2">
+          <div class="opacity-60 text-xs text-white max-w-[280px] mx-auto mb-2 leading-relaxed">
+            Sign in with your Microsoft Account to access official premium features and multiplayer servers.
+          </div>
+          
+          <!-- Microsoft Login Button / Cancel Button -->
+          <v-btn
+            v-if="!isLogining"
+            block
+            size="x-large"
+            color="#222"
+            class="microsoft-login-btn rounded-xl text-white font-bold tracking-wide d-flex align-center justify-center gap-3 border border-white/10 hover:border-indigo-500/50 hover:bg-indigo-500/10 transition-all duration-300"
+            @click="onLogin"
+          >
+            <template #prepend>
+              <svg class="w-4 h-4 mr-1.5" viewBox="0 0 21 21" fill="currentColor">
+                <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
+                <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
+                <rect x="1" y="11" width="9" height="9" fill="#00a4ef"/>
+                <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
+              </svg>
+            </template>
+            Sign in with Microsoft
+          </v-btn>
+          <v-btn
+            v-else
+            block
+            size="x-large"
+            color="error"
+            variant="tonal"
+            class="rounded-xl font-bold tracking-wide d-flex align-center justify-center gap-2"
+            @click="onLogin"
+          >
+            <v-icon size="16">close</v-icon>
+            {{ t('shared.cancel') }}
+          </v-btn>
+
+          <!-- Device Code Checkbox/Mode -->
+          <div class="d-flex align-center justify-center mt-2">
+            <v-checkbox
+              v-model="data.useDeviceCode"
+              density="compact"
+              hide-details
+              color="primary"
+              class="text-xs text-white/70"
+              label="Use Device Code Login"
+            />
+          </div>
+
+          <!-- Device Code Verification Instructions -->
+          <div v-if="data.verificationUri" class="device-code-box p-4 rounded-xl bg-black/40 border border-info/20 text-left mt-2">
+            <div class="text-[10px] text-white/40 font-semibold uppercase tracking-wider mb-1">Authorization Code:</div>
+            <div class="text-xl font-mono font-black text-primary tracking-widest select-all mb-3">{{ data.password }}</div>
+            <v-btn
+              block
+              size="small"
+              color="info"
+              variant="flat"
+              class="rounded-lg text-[10px] font-bold"
+              :href="data.verificationUri"
+              target="browser"
+            >
+              Authorize in Browser
+              <v-icon end size="12">open_in_new</v-icon>
+            </v-btn>
+          </div>
+        </div>
+
+        <!-- OFFLINE LOGIN TAB -->
+        <div v-if="activeTab === 'offline'" class="d-flex flex-col gap-4 py-2">
+          <!-- Username Input -->
+          <v-combobox
+            v-slot:item
+            v-if="!streamerMode"
+            ref="accountInput"
+            v-model="data.username"
+            :items="history"
+            prepend-inner-icon="person"
+            variant="outlined"
+            density="comfortable"
+            rounded="xl"
+            required
+            label="Username"
+            class="custom-input"
+            :rules="usernameRules"
+            :error="!!errorMessage"
+            hide-details="auto"
+            @update:model-value="error = undefined"
+            @keypress="error = undefined"
+            @keypress.enter="onLogin"
+          />
+          <v-text-field
+            v-else
+            ref="accountInput"
+            v-model="data.username"
+            prepend-inner-icon="person"
+            variant="outlined"
+            density="comfortable"
+            rounded="xl"
+            required
+            type="password"
+            label="Username"
+            class="custom-input"
+            :rules="usernameRules"
+            :error="!!errorMessage"
+            hide-details="auto"
+            @update:model-value="error = undefined"
+            @keypress="error = undefined"
+            @keypress.enter="onLogin"
+          />
+
+          <!-- Advanced Offline UUID Toggle & Input -->
+          <div class="advanced-toggle text-right">
+            <button
+              class="text-[10px] text-white/40 hover:text-white transition-colors font-semibold flex items-center gap-1 ml-auto"
+              @click="showOfflineAdvanced = !showOfflineAdvanced"
+            >
+              <v-icon size="12">{{ showOfflineAdvanced ? 'expand_less' : 'expand_more' }}</v-icon>
+              Advanced (UUID)
+            </button>
+          </div>
+
+          <v-text-field
+            v-model="data.uuid"
+            variant="outlined"
+            density="comfortable"
+            rounded="xl"
+            prepend-inner-icon="fingerprint"
+            placeholder="User UUID (Optional)"
+            label="Custom UUID"
+            class="custom-input"
+            hide-details
+            @keypress.enter="onLogin"
+          />
+
+          <v-btn
+            block
+            size="large"
+            color="amber-darken-1"
+            class="rounded-xl text-white font-bold tracking-wide mt-2"
+            :loading="isLogining"
+            @click="onLogin"
+          >
+            {{ isLogining ? 'Logging In...' : 'Add Offline Account' }}
+          </v-btn>
+        </div>
+
+        <!-- THIRD PARTY LOGIN TAB -->
+        <div v-if="activeTab === 'thirdparty'" class="d-flex flex-col gap-4 py-2">
+          <v-select
+            v-model="selectedThirdParty"
+            variant="outlined"
+            density="comfortable"
+            rounded="xl"
+            prepend-inner-icon="cloud"
+            :items="thirdPartyItems"
+            item-title="text"
+            item-value="value"
+            label="Service Provider"
+            hide-details
+            class="custom-select"
+          />
+
+          <v-text-field
+            ref="accountInput"
+            v-model="data.username"
+            prepend-inner-icon="person"
+            variant="outlined"
+            density="comfortable"
+            rounded="xl"
+            required
+            :label="getUserServiceAccount(authority)"
+            class="custom-input"
+            :rules="usernameRules"
+            :error="!!errorMessage"
+            hide-details="auto"
+            @update:model-value="error = undefined"
+            @keypress="error = undefined"
+            @keypress.enter="onLogin"
+          />
+
+          <v-text-field
+            v-model="data.password"
+            prepend-inner-icon="lock"
+            variant="outlined"
+            density="comfortable"
+            rounded="xl"
+            type="password"
+            required
+            label="Password"
+            class="custom-input"
+            :rules="passwordRules"
+            :error="!!errorMessage"
+            hide-details="auto"
+            @update:model-value="error = undefined"
+            @keypress.enter="onLogin"
+          />
+
+          <v-btn
+            block
+            size="large"
+            color="indigo-darken-1"
+            class="rounded-xl text-white font-bold tracking-wide mt-2"
+            :loading="isLogining"
+            @click="onLogin"
+          >
+            {{ isLogining ? 'Signing In...' : 'Sign In with Service' }}
+          </v-btn>
+        </div>
+
       </div>
     </div>
 
-    <UserLoginAuthoritySelect
-      v-model="authority"
-      class="flex-grow-0"
-      data-testid="login-authority"
-      :items="items"
-      density="default"
-      hide-details
-      @add-service="$emit('add-service')"
-    />
-    <v-combobox
-      v-if="!streamerMode"
-      ref="accountInput"
-      class="flex-grow-0"
-      v-model="data.username"
-      data-testid="login-username"
-      :items="history"
-      prepend-inner-icon="person"
-      variant="outlined"
-      density="comfortable"
-      rounded="lg"
-      required
-      :label="getUserServiceAccount(authority)"
-      :rules="usernameRules"
-      :error="!!errorMessage"
-      hide-details="auto"
-      @update:model-value="error = undefined"
-      @keypress="error = undefined"
-      @keypress.enter="onLogin"
-    />
-    <v-text-field
-      v-else
-      ref="accountInput"
-      class="flex-grow-0"
-      v-model="data.username"
-      data-testid="login-username"
-      prepend-inner-icon="person"
-      variant="outlined"
-      density="comfortable"
-      rounded="lg"
-      required
-      type="password"
-      :label="getUserServiceAccount(authority)"
-      :rules="usernameRules"
-      :error="!!errorMessage"
-      hide-details="auto"
-      @update:model-value="error = undefined"
-      @keypress="error = undefined"
-      @keypress.enter="onLogin"
-    />
-    <v-text-field
-      v-if="!isOffline"
-      v-model="data.password"
-      data-testid="login-password"
-      class="flex-grow-0"
-      prepend-inner-icon="lock"
-      variant="outlined"
-      density="comfortable"
-      rounded="lg"
-      :type="passwordType"
-      required
-      :label="passwordLabel"
-      :placeholder="passwordPlaceholder"
-      :rules="!isPasswordReadonly ? passwordRules : []"
-      :disabled="isPasswordDisabled"
-      :readonly="isPasswordReadonly"
-      :error="!!errorMessage"
-      hide-details="auto"
-      @update:model-value="error = undefined"
-      @keypress.enter="onLogin"
-    />
-    <v-text-field
-      v-else
-      v-model="data.uuid"
-      class="flex-grow-0"
-      variant="outlined"
-      density="comfortable"
-      prepend-inner-icon="fingerprint"
-      :placeholder="uuidLabel"
-      :label="uuidLabel"
-      hide-details
-      @keypress.enter="onLogin"
-    />
-
-    <v-alert
-      v-if="errorMessage"
-      density="compact"
-      variant="tonal"
-      color="error"
-      rounded="lg"
-      class="text-left text-sm"
-    >
-      {{ errorMessage }}
-    </v-alert>
-
-    <v-checkbox
-      v-if="allowDeviceCode"
-      v-model="data.useDeviceCode"
-      density="compact"
-      hide-details
-      color="primary"
-      :label="t('userServices.microsoft.useDeviceCode')"
-    />
-
-    <div class="flex-grow" />
-
-    <div @mouseenter="onMouseEnterLogin" @mouseleave="onMouseLeaveLogin">
-      <v-btn
-        block
-        data-testid="login-submit"
-        size="x-large"
-        rounded="xl"
-        class="text-white font-bold tracking-wider shadow-[0_10px_25px_-8px_rgba(var(--v-theme-primary),0.6)] hover:shadow-[0_15px_30px_-8px_rgba(var(--v-theme-primary),0.8)] transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
-        style="
-          background: linear-gradient(
-            to right,
-            rgb(var(--v-theme-primary)),
-            rgba(var(--v-theme-primary), 0.7)
-          );
-        "
-        :loading="isLogining && !hovered"
-        :prepend-icon="isLogining ? undefined : 'login'"
-        @click="onLogin"
-      >
-        <template v-if="!isLogining">
-          {{ t('login.login') }}
-        </template>
-        <template v-else>
-          <v-icon start>close</v-icon>
-          {{ t('shared.cancel') }}
-        </template>
-      </v-btn>
-      <slot />
-    </div>
-
-    <v-alert
-      v-if="data.verificationUri"
-      density="compact"
-      variant="tonal"
-      color="info"
-      rounded="lg"
-      class="mt-3 text-left border border-info/30"
-    >
+    <!-- Bottom Actions / Links -->
+    <div class="mt-6 flex flex-col gap-3 items-center text-xs font-semibold">
       <a
-        :href="data.verificationUri"
+        v-if="signUpLink && activeTab !== 'offline'"
         target="browser"
-        class="text-info underline break-all text-sm font-medium hover:text-info-dark transition-colors"
+        :href="signUpLink"
+        class="hover:underline transition-colors text-white/50 hover:text-white"
       >
-        {{ t('login.manualLoginUrl') }}
-      </a>
-    </v-alert>
-
-    <div class="mt-4 flex flex-col gap-3 items-center text-sm font-medium">
-      <a
-        v-if="authority === AUTHORITY_MICROSOFT"
-        target="browser"
-        href="https://my.minecraft.net/en-us/password/forgot/"
-        class="hover:underline transition-colors opacity-70 hover:opacity-100"
-        style="color: rgba(var(--v-theme-on-surface), 0.8)"
-      >
-        {{ t('login.forgetPassword') }}
+        Don't have an account? Sign up
       </a>
       <div
-        v-if="signUpLink"
-        class="flex items-center gap-3 flex-wrap justify-center py-2 px-4 rounded-xl border w-full backdrop-blur-sm"
-        style="
-          background: rgba(var(--v-theme-on-surface), 0.03);
-          border-color: rgba(var(--v-theme-on-surface), 0.08);
-        "
+        class="flex items-center gap-3 flex-wrap justify-center py-2 px-4 rounded-xl border border-white/5 w-full bg-white/2 backdrop-blur-sm"
       >
         <a
-          target="browser"
-          :href="signUpLink"
-          class="hover:underline transition-colors opacity-70 hover:opacity-100"
-          style="color: rgba(var(--v-theme-on-surface), 0.8)"
-        >
-          {{ t('login.signupDescription') }}
-          {{ t('login.signup') }}
-        </a>
-        <span class="opacity-30" style="color: rgba(var(--v-theme-on-surface), 0.5)">|</span>
-        <a
-          class="hover:underline cursor-pointer transition-colors opacity-70 hover:opacity-100"
-          style="color: rgba(var(--v-theme-on-surface), 0.8)"
+          class="hover:underline cursor-pointer transition-colors text-white/50 hover:text-white"
           @click.stop="$emit('add-service')"
         >
           {{ manageAuthorityLabel }}
@@ -224,10 +317,9 @@ import {
   UserServiceKey,
   isException,
 } from '@xmcl/runtime-api'
-import { Ref } from 'vue'
+import { Ref, ref, reactive, computed, watch, nextTick, inject } from 'vue'
 import { useAccountSystemHistory, useAuthorityItems } from '../composables/login'
 import { kUserContext, useLoginValidation } from '../composables/user'
-import UserLoginAuthoritySelect from './UserLoginAuthoritySelect.vue'
 
 const props = defineProps<{
   inside: boolean
@@ -246,6 +338,11 @@ const streamerMode = inject('streamerMode', useLocalStorageCacheBool('streamerMo
 const { t } = useI18n()
 const { select } = injection(kUserContext)
 const { login, abortLogin, on } = useService(UserServiceKey)
+
+// Tabs config
+const activeTab = ref<'microsoft' | 'offline' | 'thirdparty'>('microsoft')
+const showOfflineAdvanced = ref(false)
+const selectedThirdParty = ref('')
 
 // Shared data
 const data = reactive({
@@ -360,10 +457,6 @@ const errorMessage = computed(() => {
     }
     if (e.exception.type === 'userExchangeXboxTokenFailed') {
       const redirect = e.exception.xErrRedirect
-      // New granular reasons take precedence; legacy reasons fall through
-      // to the existing strings. Where Microsoft returns a fix-it URL
-      // (e.g. AddChildToFamily, CreateAccount), pass it through so the
-      // user can click straight to the resolution.
       switch (e.exception.reason) {
         case 'CHILD_ACCOUNT':
           return t('loginError.loginXboxChildAccount', { url: redirect ?? 'https://start.ui.xboxlive.com/AddChildToFamily' })
@@ -381,8 +474,6 @@ const errorMessage = computed(() => {
         case 'BAD_XSTS':
           return t('loginError.loginXboxBadXsts')
       }
-      // Surface the raw XErr code if we have one but no classification --
-      // helps users searching the web / opening support tickets.
       if (typeof e.exception.xErr === 'number') {
         return t('loginError.loginXboxFailedWithCode', { code: e.exception.xErr })
       }
@@ -426,35 +517,87 @@ const errorMessage = computed(() => {
   return e ? t('loginError.requestFailed') : ''
 })
 
-// Login
+// Third party services helper
+const thirdPartyItems = computed(() => {
+  return items.value.filter(item => item.value !== AUTHORITY_MICROSOFT && item.value !== AUTHORITY_DEV)
+})
+const hasThirdPartyServices = computed(() => {
+  return thirdPartyItems.value.length > 0
+})
+
+watch(thirdPartyItems, (newVal) => {
+  if (newVal.length > 0 && !selectedThirdParty.value) {
+    selectedThirdParty.value = newVal[0].value
+  }
+}, { immediate: true })
+
+function setTab(tab: 'microsoft' | 'offline' | 'thirdparty') {
+  activeTab.value = tab
+  if (tab === 'microsoft') {
+    authority.value = AUTHORITY_MICROSOFT
+  } else if (tab === 'offline') {
+    authority.value = AUTHORITY_DEV
+  } else if (tab === 'thirdparty') {
+    if (selectedThirdParty.value) {
+      authority.value = selectedThirdParty.value
+    } else if (thirdPartyItems.value.length > 0) {
+      selectedThirdParty.value = thirdPartyItems.value[0].value
+      authority.value = selectedThirdParty.value
+    }
+  }
+}
+
+watch(selectedThirdParty, (newVal) => {
+  if (activeTab.value === 'thirdparty' && newVal) {
+    authority.value = newVal
+  }
+})
+
+watch(authority, (newAuth) => {
+  if (newAuth === AUTHORITY_MICROSOFT) {
+    activeTab.value = 'microsoft'
+  } else if (newAuth === AUTHORITY_DEV) {
+    activeTab.value = 'offline'
+  } else {
+    activeTab.value = 'thirdparty'
+    selectedThirdParty.value = newAuth
+  }
+}, { immediate: true })
+
+// Login Execution
 const accountInput: Ref<any> = ref(null)
 const { refresh: onLogin, error } = useRefreshable(async () => {
   error.value = undefined
-  accountInput.value.blur()
-  await nextTick() // wait a tick to make sure username updated.
+  if (accountInput.value) {
+    accountInput.value.blur()
+  }
+  await nextTick()
   if (isLogining.value) {
     await abortLogin()
     return
   }
 
-  for (const rule of usernameRules.value) {
-    const err = rule(data.username)
-    if (err !== true) {
-      throw new Error(typeof err === 'string' ? err : 'Validation failed')
-    }
-  }
-
-  if (!isPasswordReadonly.value && !isPasswordDisabled.value) {
-    for (const rule of passwordRules) {
-      const err = rule(data.password)
+  // Only validate username & password locally if we are NOT on Microsoft Premium tab
+  if (authority.value !== AUTHORITY_MICROSOFT) {
+    for (const rule of usernameRules.value) {
+      const err = rule(data.username)
       if (err !== true) {
         throw new Error(typeof err === 'string' ? err : 'Validation failed')
+      }
+    }
+
+    if (!isPasswordReadonly.value && !isPasswordDisabled.value) {
+      for (const rule of passwordRules) {
+        const err = rule(data.password)
+        if (err !== true) {
+          throw new Error(typeof err === 'string' ? err : 'Validation failed')
+        }
       }
     }
   }
 
   const index = history.value.indexOf(data.username)
-  if (index === -1) {
+  if (index === -1 && data.username) {
     history.value = [data.username, ...history.value]
   }
   isLogining.value = true
@@ -480,16 +623,7 @@ watch(authority, () => {
 // Hint state
 const showDropHint = computed(() => allowDeviceCode.value && props.inside && isLogining.value)
 
-// Hover state
-const hovered = ref(false)
-const onMouseEnterLogin = () => {
-  hovered.value = true
-}
-const onMouseLeaveLogin = () => {
-  hovered.value = false
-}
-
-// Reset
+// Reset / watch options
 watch(
   () => props.options,
   (options) => {
@@ -509,56 +643,38 @@ watch(
 )
 </script>
 
-<style>
+<style scoped>
 .login-form-container {
-  container-type: size;
-  container-name: login-form;
-  gap: 1.2rem;
+  background: transparent;
 }
-
-@container login-form (max-height: 480px) {
-  .login-form-branding {
-    display: none;
-  }
-
-  .login-form-container {
-    gap: 0.5rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
+.tabs-container {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
 }
-
-@container login-form (max-height: 450px) {
-  .login-form-branding {
-    display: none;
-  }
-
-  .login-form-container {
-    gap: 0.1rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
+.tab-btn {
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-.input-group {
-  padding-top: 5px;
+.tab-btn:hover {
+  color: #fff;
 }
-
-.password {
-  padding-top: 5px;
+.device-code-box {
+  background: rgba(0, 0, 0, 0.5) !important;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.2);
 }
-
-.input-group--text-field label {
-  top: 5px;
+.custom-input :deep(.v-field) {
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.02) !important;
 }
-
-.login-card {
-  padding-bottom: 25px;
+.custom-input :deep(.v-field--focused) {
+  border-color: rgb(var(--v-theme-primary)) !important;
 }
-
-.login-card .v-card__text {
-  padding-left: 50px;
-  padding-right: 50px;
-  padding-bottom: 0px;
+.microsoft-login-btn {
+  background: rgba(255, 255, 255, 0.03) !important;
+  transition: all 0.3s ease;
+}
+.microsoft-login-btn:hover {
+  background: rgba(99, 102, 241, 0.1) !important;
+  box-shadow: 0 0 16px rgba(99, 102, 241, 0.15);
 }
 </style>
