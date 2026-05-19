@@ -11,6 +11,12 @@ export default defineConfig({
     sequence: {
     },
     globals: true,
+    alias: [
+      {
+        find: /^~\/(.*)$/,
+        replacement: join(__dirname, 'xmcl-runtime/$1'),
+      },
+    ],
     coverage: {
       provider: 'v8',
     },

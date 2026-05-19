@@ -11,6 +11,7 @@ import {
   DownloadUpdateTask,
   NetworkStatus,
   ElectronUpdateOperation,
+  type ReleaseInfo,
 } from '@xmcl/runtime-api'
 import { readdir, stat } from 'fs-extra'
 import os, { freemem, totalmem } from 'os'
@@ -146,6 +147,22 @@ export class BaseService extends AbstractService implements IBaseService {
     try {
       const settings = await this.getSettings()
       this.log('Check update')
+
+      if (process.env.XMCL_TEST_UPDATE === '1') {
+        const info: ReleaseInfo = {
+          name: `v${this.app.version}.test`,
+          body: 'This is a test update. No actual update will be installed.',
+          date: new Date().toISOString(),
+          files: [],
+          newUpdate: true,
+          operation: ElectronUpdateOperation.Manual,
+          force: false,
+        }
+        settings.updateInfoSet(info)
+        settings.updateStatusSet('pending')
+        return
+      }
+
       const info = await this.app.updater.checkUpdateTask()
       settings.updateInfoSet(info)
       if (info.newUpdate) {
