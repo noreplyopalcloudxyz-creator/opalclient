@@ -75,7 +75,7 @@
         <v-btn
           v-if="!updateInfo?.force"
           variant="text"
-          @click="isShown.value = false"
+          @click="isShown = false"
         >
           {{ t('setting.close') || 'Close' }}
         </v-btn>

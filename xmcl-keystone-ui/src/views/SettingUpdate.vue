@@ -136,7 +136,7 @@ const { show: showUpdateInfo } = useDialog('update-info')
 const disableUpdate = false // state.env !== 'raw'
 const { state } = injection(kSettingsState)
 const { updateInfo, installing, updateStatus, checkUpdate, checkingUpdate, version } = injection(kUpdateSettings)
-const hasNewUpdate = computed(() => updateInfo.value?.name !== version.value)
+const hasNewUpdate = computed(() => updateInfo.value?.newUpdate ?? false)
 const forceUpdate = computed(() => updateInfo.value?.force ?? false)
 const autoDownload = computed({
   get: () => state.value?.autoDownload ?? false,
