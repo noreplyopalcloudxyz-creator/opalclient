@@ -115,7 +115,7 @@
       hover
 
       style="width: 100%"
-      to="https://github.com/opal-launcher/opal-launcher/releases"
+      to="https://github.com/noreplyopalcloudxyz-creator/opalclient/releases"
       target="browser"
       push
     >
@@ -168,7 +168,7 @@ const openOfficialWebsite = () => {
   window.open('https://opal-launcher.app', 'browser')
 }
 const openGithub = () => {
-  window.open('https://github.com/opal-launcher/opal-launcher/releases', 'browser')
+  window.open('https://github.com/noreplyopalcloudxyz-creator/opalclient/releases', 'browser')
 }
 </script>
 

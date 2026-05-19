@@ -70,9 +70,10 @@ function onClick(event: MouseEvent) {
   border-radius: 50%;
   background-color: transparent;
   transition:
-    border-radius 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-    color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s ease;
   overflow: hidden;
   cursor: default;
 }
@@ -82,20 +83,23 @@ function onClick(event: MouseEvent) {
 }
 
 .sidebar-item--clickable:hover .sidebar-item__content {
-  border-radius: 16px;
-  background-color: rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  background-color: rgba(92, 123, 255, 0.18);
+  transform: translateY(-1px);
 }
 
 .sidebar-item--clickable.sidebar-item--colored:hover .sidebar-item__content {
   background-color: var(--sidebar-item-color);
   color: white;
+  box-shadow: 0 12px 24px rgba(92, 123, 255, 0.24);
 }
 
 .sidebar-item--active .sidebar-item__content,
 .sidebar-item.router-link-active .sidebar-item__content {
-  border-radius: 16px;
-  background-color: var(--sidebar-item-color);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(92, 123, 255, 0.95), rgba(124, 170, 255, 0.92));
   color: white;
+  box-shadow: 0 18px 30px rgba(92, 123, 255, 0.32);
 }
 
 .sidebar-item__icon {

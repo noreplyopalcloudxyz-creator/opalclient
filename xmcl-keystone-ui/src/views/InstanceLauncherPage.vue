@@ -223,6 +223,12 @@ watch(isOpen, (open) => {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  background: rgba(10, 14, 30, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 30px;
+  box-shadow: 0 48px 100px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(30px);
+  padding: 2rem;
 }
 
 .instance-launcher-container--embedded {
@@ -262,8 +268,9 @@ watch(isOpen, (open) => {
 }
 
 .search-input {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.18);
 }
 
 .launcher-grid {
@@ -276,9 +283,9 @@ watch(isOpen, (open) => {
 }
 
 .instance-card {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 1.5rem 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  padding: 1.75rem 1.2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -286,6 +293,8 @@ watch(isOpen, (open) => {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
 }
 
 .instance-card:hover {
@@ -295,13 +304,14 @@ watch(isOpen, (open) => {
 }
 
 .instance-card--active {
-  border-color: var(--color-primary);
-  background: rgba(var(--color-primary-rgb), 0.15);
+  border-color: rgba(var(--v-theme-primary), 0.45);
+  background: linear-gradient(180deg, rgba(var(--v-theme-primary), 0.14), rgba(255, 255, 255, 0.04));
+  box-shadow: 0 18px 38px rgba(var(--v-theme-primary), 0.12);
 }
 
 .instance-card--create {
-  background: rgba(76, 175, 80, 0.15);
-  border: 2px dashed rgba(76, 175, 80, 0.5);
+  background: linear-gradient(180deg, rgba(76, 175, 80, 0.18), rgba(38, 166, 154, 0.08));
+  border: 2px dashed rgba(76, 175, 80, 0.55);
 }
 
 .instance-card--create:hover {

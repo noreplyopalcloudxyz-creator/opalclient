@@ -17,6 +17,12 @@
         </v-icon>
       </button>
 
+      <div class="sidebar-brand non-moveable" v-shared-tooltip.right="() => 'Opal Launcher'">
+        <div class="sidebar-brand__icon">
+          <v-icon size="24">diamond</v-icon>
+        </div>
+      </div>
+
       <AppSideBarItem
         id="my-stuff-button"
         data-testid="nav-accounts"
@@ -275,5 +281,39 @@ useDragAutoScroll(instancesScrollEl)
 
 .sidebar-back-btn:active {
   background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 4px auto 10px;
+  border-radius: 18px;
+  background: rgba(92, 123, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.sidebar-brand__icon {
+  color: var(--opal-accent);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 4px auto 10px;
+  border-radius: 18px;
+  background: rgba(92, 123, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.sidebar-brand__icon {
+  color: var(--opal-accent);
 }
 </style>

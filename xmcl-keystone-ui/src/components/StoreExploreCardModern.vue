@@ -199,7 +199,10 @@ export interface ExploreProjectModern {
 
 <style scoped>
 .explore-card {
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(7, 10, 22, 0.95);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(22px);
   transition:
     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
@@ -208,11 +211,11 @@ export interface ExploreProjectModern {
 }
 
 .explore-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   box-shadow:
-    0 12px 24px -8px rgba(0, 0, 0, 0.25),
-    0 4px 12px -4px rgba(0, 0, 0, 0.15);
-  border-color: rgba(var(--v-theme-primary), 0.35);
+    0 24px 48px -12px rgba(0, 0, 0, 0.35),
+    0 8px 20px -8px rgba(0, 0, 0, 0.18);
+  border-color: rgba(var(--v-theme-primary), 0.45);
 }
 
 :global(.theme--light) .explore-card {
@@ -220,7 +223,8 @@ export interface ExploreProjectModern {
 }
 
 .explore-card__media {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .explore-card__img {
@@ -248,7 +252,9 @@ export interface ExploreProjectModern {
 .explore-card__source {
   font-size: 10px;
   letter-spacing: 0.06em;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
 }
 
 .explore-card__cta {

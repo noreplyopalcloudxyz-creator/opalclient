@@ -26,7 +26,7 @@ To make updates show up automatically in the launcher when you push changes, fol
 Commit and push these update configurations to your repository:
 ```bash
 git add .
-git commit -m "Configure auto-updater to point to opalclient repo"
+git commit -m "Configure auto-updater to point to noreplyopalcloudxyz-creator/opalclient"
 git push origin master
 ```
 

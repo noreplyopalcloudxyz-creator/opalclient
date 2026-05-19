@@ -39,7 +39,7 @@
     >
       <div
         v-if="(backgroundColorOverlay && !isHome) || backgroundType === BackgroundType.NONE"
-        class="z-3 absolute h-full w-full"
+        class="z-3 absolute h-full w-full opal-background-overlay"
         :style="{ 'background': backgroundColor }"
       />
     </transition>
@@ -100,5 +100,10 @@ watch(backgroundType, (t) => {
   min-width: 100%;
   min-height: 100%;
   z-index: 4;
+}
+
+.opal-background-overlay {
+  background: linear-gradient(180deg, rgba(7, 11, 22, 0.78), rgba(4, 6, 13, 0.92));
+  box-shadow: inset 0 0 120px rgba(92, 123, 255, 0.16);
 }
 </style>

@@ -10,7 +10,7 @@ jobs:
     - name: Download Releases
       uses: robinraju/release-downloader@v1.7
       with:
-        repository: "noreplyopalcloudxyz-creator/opalclient"
+        repository: ${{ github.repository }}
         tag: ${{ github.event.release.tag_name }}
         fileName: "*"
         out-file-path: build
@@ -133,7 +133,7 @@ jobs:
       - name: Download Releases
         uses: robinraju/release-downloader@v1.8
         with:
-          repository: "noreplyopalcloudxyz-creator/opalclient"
+          repository: ${{ github.repository }}
           tag: ${{ github.event.release.tag_name }}
           fileName: "version"
       - uses: actions/github-script@v6
@@ -162,7 +162,7 @@ jobs:
   #   - name: Download Releases
   #     uses: robinraju/release-downloader@v1.7
   #     with:
-  #       repository: "noreplyopalcloudxyz-creator/opalclient"
+  #       repository: ${{ github.repository }}
   #       tag: ${{ github.event.release.tag_name }}
   #       fileName: "xmcl-*.appx"
   #       out-file-path: build

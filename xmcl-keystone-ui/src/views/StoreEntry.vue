@@ -35,7 +35,7 @@
     <div class="flex-1 flex overflow-y-auto flex-col lg:(overflow-hidden flex-row)">
       <!--#region Sidebar Filters -->
       <div
-        class="w-auto lg:(w-88 overflow-y-auto pb-20) flex-none px-4 pt-4 flex flex-col gap-6 custom-scrollbar"
+        class="store-sidebar-panel w-auto lg:(w-88 overflow-y-auto pb-20) flex-none px-4 pt-4 flex flex-col gap-6 custom-scrollbar"
       >
         <div class="grid grid-cols-3 lg:(flex flex-col) gap-6 flex-shrink-0">
           <!-- Sources -->
@@ -131,7 +131,7 @@
       </div>
 
       <!-- Main Content -->
-      <div class="flex-1 lg:(overflow-y-auto) p-8 custom-scrollbar relative" ref="container">
+      <div class="store-main-panel flex-1 lg:(overflow-y-auto) p-8 custom-scrollbar relative" ref="container">
         <!-- Featured Carousel -->
         <div v-if="!keyword && selectedCount === 0" class="mb-12">
           <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
@@ -587,6 +587,7 @@ useTextFieldBehavior(filter, focused)
 
 .source-button.omitted {
   @apply text-gray-400 dark:text-gray-500;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .source-button.omitted .cross-overlay {
@@ -595,5 +596,52 @@ useTextFieldBehavior(filter, focused)
 
 .source-button:hover .cross-overlay {
   opacity: 1;
+}
+
+.store-sidebar-panel {
+  background: rgba(10, 16, 35, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 28px 72px rgba(0, 0, 0, 0.24);
+  border-radius: 28px;
+  padding: 1rem;
+}
+
+.store-main-panel {
+  background: rgba(8, 11, 24, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22);
+  border-radius: 32px;
+  backdrop-filter: blur(18px);
+}
+
+.filter-group {
+  @apply mb-4;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 1rem;
+}
+
+.store-entry .filter-title {
+  margin-bottom: 1rem;
+}
+
+.source-button {
+  transition: all 0.25s ease;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.source-button:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(var(--v-theme-primary), 0.3);
+}
+
+.store-pagination {
+  background: rgba(6, 10, 26, 0.9);
+  border-radius: 18px;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 </style>

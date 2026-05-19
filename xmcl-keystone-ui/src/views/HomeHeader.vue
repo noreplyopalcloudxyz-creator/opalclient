@@ -18,6 +18,12 @@
         opacity: dragover ? 0 : '',
       }"
     >
+      <div class="header-brand-bar flex items-center gap-2 mb-3 px-6">
+        <div class="header-brand-badge">
+          <v-icon size="18">diamond</v-icon>
+          <span>Opal Launcher</span>
+        </div>
+      </div>
       <div
         class="align-center flex max-h-20 flex-1 flex-grow-0 items-baseline pl-6 pr-2 gap-1"
       >
@@ -137,16 +143,47 @@ const overcount = ref(0)
 
 .header {
   padding-top: 2.5rem;
+  padding-bottom: 1rem;
+  color: var(--opal-text);
+}
+
+.header-brand-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.header-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(92, 123, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--opal-accent);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
 }
 
 .header.compact {
   padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
+  padding-bottom: 0.8rem;
+}
+
+.header-brand-badge v-icon {
+  color: var(--opal-accent);
+}
+
+.header .align-center span {
+  color: #eef3ff;
+  text-shadow: 0 0 12px rgba(92, 123, 255, 0.12);
 }
 
 .compact {
-  /* background: rgba(255, 255, 255, 0.6); */
-  /* backdrop-filter: blur(10px); */
+}
+
+.dark .compact {
 }
 
 .dark .compact {

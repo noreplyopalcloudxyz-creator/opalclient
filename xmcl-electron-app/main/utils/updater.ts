@@ -33,6 +33,10 @@ import { checksum } from '~/util/fs'
 import ElectronLauncherApp from '../ElectronLauncherApp'
 import { ensureElevateExe } from './elevate'
 
+const GITHUB_UPDATE_OWNER = 'noreplyopalcloudxyz-creator'
+const GITHUB_UPDATE_REPO = 'opalclient'
+const GITHUB_UPDATE_BASE = `https://github.com/${GITHUB_UPDATE_OWNER}/${GITHUB_UPDATE_REPO}`
+const GITHUB_RELEASE_LATEST = `${GITHUB_UPDATE_BASE}/releases/latest`
 const kPatched = Symbol('Patched')
 
 /**
@@ -62,8 +66,8 @@ async function downloadAsarUpdate(
 
   const gfw = await app.registry.get(kGFW)
   const urls = gfw.inside
-    ? [`https://github.com/noreplyopalcloudxyz-creator/opalclient/releases/download/v${version}/${file}`]
-    : [`https://github.com/noreplyopalcloudxyz-creator/opalclient/releases/download/v${version}/${file}`]
+    ? [`${GITHUB_UPDATE_BASE}/releases/download/v${version}/${file}`]
+    : [`${GITHUB_UPDATE_BASE}/releases/download/v${version}/${file}`]
 
   const errors: Error[] = []
 
@@ -121,7 +125,7 @@ async function downloadAsarUpdate(
 }
 
 async function hintUserDownload(): Promise<void> {
-  shell.openExternal('https://opal-launcher.app')
+  shell.openExternal(GITHUB_RELEASE_LATEST)
 }
 
 async function downloadAppInstaller(
@@ -192,7 +196,7 @@ async function downloadFullUpdate(
         createRequest: (options: any, callback: any) => {
           if (gfw.inside) {
             options.hostname = 'files.0xc.cn'
-            options.pathname = `/Soft_Mirrors/github-release/noreplyopalcloudxyz-creator/opalclient/LatestRelease/${basename(options.pathname)}`
+            options.pathname = `/Soft_Mirrors/github-release/${GITHUB_UPDATE_OWNER}/${GITHUB_UPDATE_REPO}/LatestRelease/${basename(options.pathname)}`
             app.emit('download-cdn', 'electron', basename(options.pathname))
           }
           return createRequest(options, callback)

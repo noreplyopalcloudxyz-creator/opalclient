@@ -55,8 +55,16 @@ export const vuetify = createVuetify({
       dark: {
         dark: true,
         colors: {
-          primary: '#4caf50',
-          accent: '#00e676',
+          primary: '#6f8cff',
+          secondary: '#a39cff',
+          accent: '#5c7bff',
+          background: '#070b16',
+          surface: '#111a2b',
+          info: '#7aa9ff',
+          success: '#4bd9cf',
+          warning: '#ffbc57',
+          error: '#ff6b92',
+          'on-surface': '#e6ecff',
         },
       },
     },

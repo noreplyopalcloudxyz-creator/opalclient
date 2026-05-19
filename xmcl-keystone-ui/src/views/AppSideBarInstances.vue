@@ -102,7 +102,12 @@ const defaultColor = useInstanceGroupDefaultColor()
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 4px;
+  gap: 10px;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 22px;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.16);
 }
 
 .sidebar-instances__skeleton {
@@ -112,5 +117,6 @@ const defaultColor = useInstanceGroupDefaultColor()
 
 .add-instance-button {
   --sidebar-item-color: #4caf50;
+  border-radius: 16px;
 }
 </style>
