@@ -1233,6 +1233,13 @@ setting:
     loadTheme: Load Theme
   browseRoot: Browse
   checkUpdate: Check Update
+  autoDownload: Auto Download Updates
+  autoDownloadDescription: Automatically download launcher updates when they are available.
+  autoInstallOnAppQuit: Install Updates on Exit
+  autoInstallOnAppQuitDescription: Automatically install downloaded launcher updates when the app quits.
+  allowPrerelease: Include Pre-Release Updates
+  allowPrereleaseDescription: Allow pre-release versions to appear as available updates.
+  requiredUpdateNotice: A required launcher update is available and should be installed to keep the launcher secure and up to date.
   colorTheme:
     appBarColor: App Bar
     backgroundColor: Background Color

@@ -58,4 +58,12 @@ export interface ReleaseInfo {
    * The suggested operation for the update
    */
   operation: string
+  /**
+   * Force the update to install before continuing.
+   */
+  force?: boolean
+  /**
+   * Optional forced update message from release metadata.
+   */
+  forceMessage?: string
 }

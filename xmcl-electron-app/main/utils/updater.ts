@@ -9,6 +9,7 @@ import { Tracker, onDownloadSingle } from '@xmcl/installer'
 import {
   DownloadUpdateTrackerEvents,
   ElectronUpdateOperation,
+  ReleaseFile,
   ReleaseInfo,
 } from '@xmcl/runtime-api'
 import { DownloadUpdateOptions, LauncherAppUpdater } from '@xmcl/runtime/app'
@@ -120,7 +121,7 @@ async function downloadAsarUpdate(
 }
 
 async function hintUserDownload(): Promise<void> {
-  shell.openExternal('https://xmcl.app')
+  shell.openExternal('https://opal-launcher.app')
 }
 
 async function downloadAppInstaller(
@@ -130,8 +131,8 @@ async function downloadAppInstaller(
     tracker?: Tracker<DownloadUpdateTrackerEvents>
   } & DownloadBaseOptions,
 ): Promise<void> {
-  const destination = join(app.getPath('downloads'), 'X Minecraft Launcher.appinstaller')
-  const url = 'https://xmcl.blob.core.windows.net/releases/xmcl.appinstaller'
+  const destination = join(app.getPath('downloads'), 'Opal Launcher.appinstaller')
+  const url = 'https://opal-launcher.blob.core.windows.net/releases/opal-launcher.appinstaller'
 
   await download({
     url,
@@ -224,6 +225,58 @@ async function downloadFullUpdate(
   await appUpdater.downloadUpdate(cancellationToken)
 }
 
+function parseReleaseInfo(
+  name: string,
+  rawBody: string,
+  date: string,
+  files: Array<ReleaseFile>,
+  newUpdate: boolean,
+  operation: ElectronUpdateOperation,
+): ReleaseInfo {
+  let body = rawBody || ''
+  let force = false
+  let forceMessage: string | undefined
+
+  const match = body.match(/^\s*<!--([\s\S]*?)-->[\r\n]*/)
+  if (match) {
+    const meta = match[1].trim()
+    body = body.substring(match[0].length).trimStart()
+
+    if (meta.startsWith('{')) {
+      try {
+        const parsed = JSON.parse(meta)
+        force = !!parsed.force
+        forceMessage = parsed.forceMessage ?? parsed.forceReason ?? parsed.message
+      } catch {
+        // ignore metadata parse errors
+      }
+    } else {
+      for (const line of meta.split(/\r?\n/)) {
+        const [key, ...valueParts] = line.split(':')
+        const value = valueParts.join(':').trim()
+        const normalizedKey = key.trim().toLowerCase().replace(/\s+/g, '-')
+        if (normalizedKey === 'force' || normalizedKey === 'force-update' || normalizedKey === 'required') {
+          force = /^(true|1|yes|required)$/i.test(value)
+        }
+        if (normalizedKey === 'force-message' || normalizedKey === 'force-reason' || normalizedKey === 'message') {
+          forceMessage = value
+        }
+      }
+    }
+  }
+
+  return {
+    name,
+    body,
+    date,
+    files,
+    newUpdate,
+    operation,
+    force,
+    forceMessage,
+  }
+}
+
 function isSameVersion(a: string, b: string) {
   if (a.startsWith('v')) {
     a = a.substring(1)
@@ -275,14 +328,14 @@ export class ElectronUpdater implements LauncherAppUpdater {
     const platformString =
       app.platform.os === 'windows' ? 'win' : app.platform.os === 'osx' ? 'mac' : 'linux'
     const version = result.tag_name.substring(1)
-    const updateInfo: ReleaseInfo = {
-      name: result.tag_name,
-      body: result.body,
-      date: result.published_at,
+    const updateInfo = parseReleaseInfo(
+      result.tag_name,
+      result.body,
+      result.published_at,
       files,
-      newUpdate: !isSameVersion(app.version, result.tag_name),
-      operation: ElectronUpdateOperation.Manual,
-    }
+      !isSameVersion(app.version, result.tag_name),
+      ElectronUpdateOperation.Manual,
+    )
 
     const hasAsar = files.some((f) => f.name === `app-${version}-${platformString}.asar`)
     if (this.app.platform.os === 'windows') {
@@ -315,14 +368,14 @@ export class ElectronUpdater implements LauncherAppUpdater {
     if (!info) throw new Error('No update info found')
 
     const files = info.updateInfo.files.map((f) => ({ name: basename(f.url), url: f.url }))
-    const release: ReleaseInfo = {
-      name: info.updateInfo.version,
-      body: info.updateInfo.releaseNotes as string,
-      date: info.updateInfo.releaseDate,
+    const release = parseReleaseInfo(
+      info.updateInfo.version,
+      String(info.updateInfo.releaseNotes ?? ''),
+      String(info.updateInfo.releaseDate ?? ''),
       files,
-      newUpdate: !isSameVersion(info.updateInfo.version, this.app.version),
-      operation: ElectronUpdateOperation.AutoUpdater,
-    }
+      !isSameVersion(info.updateInfo.version, this.app.version),
+      ElectronUpdateOperation.AutoUpdater,
+    )
 
     return release
   }
@@ -401,17 +454,11 @@ export class ElectronUpdater implements LauncherAppUpdater {
   }
 
   async checkUpdateTask(): Promise<ReleaseInfo> {
-    if (this.app.platform.os === 'windows' || this.app.platform.os === 'osx') {
-      return this.#getUpdateFromSelfHost()
-    }
     try {
       return await this.#getUpdateFromAutoUpdater()
     } catch (e) {
-      if (isSystemError(e) && e.code === 'ENOENT') {
-        return this.#getUpdateFromSelfHost()
-      }
       this.logger.warn(e as Error)
-      throw e
+      return this.#getUpdateFromSelfHost()
     }
   }
 

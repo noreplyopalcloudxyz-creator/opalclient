@@ -10,6 +10,7 @@ import {
   type SharedState,
   DownloadUpdateTask,
   NetworkStatus,
+  ElectronUpdateOperation,
 } from '@xmcl/runtime-api'
 import { readdir, stat } from 'fs-extra'
 import os, { freemem, totalmem } from 'os'
@@ -149,6 +150,14 @@ export class BaseService extends AbstractService implements IBaseService {
       settings.updateInfoSet(info)
       if (info.newUpdate) {
         settings.updateStatusSet('pending')
+
+        if (info.operation !== ElectronUpdateOperation.Manual) {
+          const shouldForceDownload = info.force && !settings.autoDownload
+          const shouldAutoDownload = settings.autoDownload && info.operation !== ElectronUpdateOperation.AutoUpdater
+          if (shouldForceDownload || shouldAutoDownload) {
+            await this.downloadUpdate()
+          }
+        }
       }
     } catch (e) {
       if (e instanceof Error && e.name === 'Error') {
