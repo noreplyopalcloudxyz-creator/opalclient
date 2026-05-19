@@ -395,6 +395,7 @@ jobs:
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
       - name: Create Release Note PR
+        if: ${{ secrets.PAT_GITHUB_TOKEN != '' }}
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.PAT_GITHUB_TOKEN }}
