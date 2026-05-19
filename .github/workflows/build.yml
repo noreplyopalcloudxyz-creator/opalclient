@@ -293,7 +293,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore(release): version ${{ steps.version.outputs.version }}"
           title: Prepare Release ${{ steps.version.outputs.version }}
-          body: ${{ steps.version.outputs.changelog }}
+          body: "Release version ${{ steps.version.outputs.version }}"
           reviewers: ci010
           assignees: ci010
           branch: prepare-release
