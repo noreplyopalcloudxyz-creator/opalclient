@@ -14,6 +14,7 @@ import ResourcePack from '@/views/ResourcePack.vue'
 import ResourcePackActions from '@/views/ResourcePackActions.vue'
 import ResourcePackExtension from '@/views/ResourcePackExtension.vue'
 import Save from '@/views/Save.vue'
+import OpalLauncherMods from '@/views/OpalLauncherMods.vue'
 import SaveActions from '@/views/SaveActions.vue'
 import SaveExtension from '@/views/SaveExtension.vue'
 import Setting from '@/views/Setting.vue'
@@ -56,6 +57,12 @@ export const router = createRouter({
             default: Mod,
             extensions: ModExtension,
             actions: ModActions,
+          },
+        },
+        {
+          path: 'opal-launcher-mods',
+          components: {
+            default: OpalLauncherMods,
           },
         },
         {

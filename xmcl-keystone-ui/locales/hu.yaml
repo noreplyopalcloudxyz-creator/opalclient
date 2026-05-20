@@ -1177,6 +1177,7 @@ setting:
     loadConfirmMessage: A mentett téma betöltése lecseréli az aktuális témát. Készíts biztonsági mentést.
     loadTheme: Téma betöltése
   about: Körülbelül
+  sidebarShowOpalLauncherModsDescription: Mutassa az "Opal Launcher modok" parancsikont az oldalsávon
   aboutBmclDescription: >-
     A BMCL API kényelmes letöltéseket biztosít a Kínai Kontinensen lévő felhasználók számára
   aboutContributors: 🧑‍💻 Közreműködők 🧑‍💻
@@ -1458,6 +1459,7 @@ shared:
 sidebar:
   pin: Rögzít
   unpin: Rögzítés feloldása
+  opalLauncherMods: Opal Launcher modok
 sortBy:
   alphabetAsc: Rendezés ábécé szerint (emelkedő)
   alphabetDesc: Rendezés ábécé szerint (csökkenő)

@@ -1149,6 +1149,7 @@ setting:
     loadConfirmMessage: Charger un thème enregistré remplacera le thème actuel. Pensez à sauvegarder.
     loadTheme: Charger le thème
   about: À propos
+  sidebarShowOpalLauncherModsDescription: Affiche le raccourci "Mods du lanceur Opal" dans la barre latérale
   aboutBmclDescription: >-
     L'API BMCL fournit des téléchargements pratiques pour les utilisateurs en Chine continentale
   aboutContributors: 🧑‍💻 Contributeurs 🧑‍💻
@@ -1435,6 +1436,7 @@ shared:
 sidebar:
   pin: Épingler
   unpin: Désépingler
+  opalLauncherMods: Mods du lanceur Opal
 sortBy:
   alphabetAsc: Trier par alphabet (ascendant)
   alphabetDesc: Trier par Alphabet (descendant)

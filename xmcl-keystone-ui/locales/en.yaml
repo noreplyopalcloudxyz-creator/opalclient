@@ -19,6 +19,10 @@ AppShareInstanceDialog:
   share: Share
   shareNotifyTitle: Share Instance
   shareTitle: Share game files to other player
+rightShiftModMenu:
+  openModsPage: Open mods page
+  openLauncherModTools: Open launcher mod tools
+  openCurrentInstanceModsFolder: Open current instance mods folder
 BaseSettingGeneral:
   title: General
 HomeJavaIssueDialog:
@@ -1165,6 +1169,7 @@ serverStatus:
   timeout: §4Connect server timeout!
 setting:
   about: About
+  sidebarShowOpalLauncherModsDescription: Show the Opal Launcher Mods shortcut in the sidebar
   aboutBmclDescription: BMCL API provides convenient downloads for users in Chinese Mainland
   aboutContributors: 🧑‍💻 Contributors 🧑‍💻
   aboutDenoDescription: >-
@@ -1458,6 +1463,7 @@ shared:
 sidebar:
   pin: Pin
   unpin: Unpin
+  opalLauncherMods: Opal Launcher Mods
 sortBy:
   alphabetAsc: Sort by alphabet (ascending)
   alphabetDesc: Sort by alphabet (descending)

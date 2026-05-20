@@ -13,6 +13,8 @@ import { IS_DEV } from './constant'
 import defaultApp from './defaultApp'
 import { definedPlugins } from './definedPlugins'
 import { ElectronUpdater } from './utils/updater'
+// lightweight update manager (version.json -> Vercel)
+const { UpdateManager } = require('./utils/updateManager')
 import { getWindowsUtils } from './utils/windowsUtils'
 
 class ElectronShell implements Shell {
@@ -235,6 +237,16 @@ export default class ElectronLauncherApp extends LauncherApp {
     app.whenReady().then(() => {
       Menu.setApplicationMenu(null)
     })
+
+    // Start lightweight update manager: silent background check + UI prompt if needed
+    try {
+      const um = new UpdateManager(this, { updateUrl: process.env.UPDATE_URL, channel: process.env.UPDATE_CHANNEL })
+      um.startBackgroundCheck()
+      // also expose for tests / manual triggers
+      ;(this as any).updateManager = um
+    } catch (e) {
+      this.getLogger('ElectronLauncherApp').warn('Fail to start UpdateManager', e)
+    }
 
     await super.setup()
   }

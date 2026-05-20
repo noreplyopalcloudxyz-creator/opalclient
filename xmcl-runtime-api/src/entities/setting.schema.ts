@@ -87,6 +87,18 @@ export const SettingSchema = z.object({
   enableDedicatedGPUOptimization: z.boolean().catch(true),
   /** Window translucency effect */
   windowTranslucent: z.boolean().catch(false),
+  /** Built-in Opal Client integration enabled */
+  opalClientEnabled: z.boolean().catch(false),
+  /** In-game overlay keybind for Opal Client */
+  opalClientKeybind: z.string().catch('RIGHT_SHIFT'),
+  /** Enabled Opal Client module IDs */
+  opalClientModules: z.array(z.string()).catch([]),
+  /** Per-module install status for Opal Client modules */
+  opalClientModuleStatuses: z.record(z.string(), z.enum(['pending', 'installed', 'failed'])).catch({}),
+  /** HUD editor layout state for Opal Client */
+  opalClientHudLayout: z.string().catch(''),
+  /** Show the Opal Client overlay */
+  opalClientShowOverlay: z.boolean().catch(true),
   /** Global resolution settings for Minecraft */
   globalResolution: GlobalResolutionSchema.catch({}),
 })

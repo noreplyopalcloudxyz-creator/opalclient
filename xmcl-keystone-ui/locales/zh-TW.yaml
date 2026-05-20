@@ -1105,6 +1105,7 @@ setting:
     loadConfirmMessage: 載入已保存的主題將取代目前主題，請先備份。
     loadTheme: 載入主題
   about: 關於
+  sidebarShowOpalLauncherModsDescription: 在側邊欄顯示「Opal Launcher 模組」快捷方式
   aboutBmclDescription: BMCL API 為中國地區用戶提供便捷的下載服務
   aboutContributors: 🧑‍💻 貢獻者 🧑‍💻
   aboutDenoDescription: XMCL 使用 Deno Deploy 平台提供的無伺服器 JavaScript 應用程式
@@ -1375,6 +1376,7 @@ shared:
 sidebar:
   pin: 釘選
   unpin: 取消釘選
+  opalLauncherMods: Opal 啟動器 模組
 sortBy:
   alphabetAsc: 按字母（上升）排序
   alphabetDesc: 按字母（下降）排序

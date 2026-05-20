@@ -1125,6 +1125,7 @@ setting:
     loadConfirmMessage: Завантаження збереженої теми замінить поточну. За потреби зробіть резервну копію.
     loadTheme: Завантажити тему
   about: Про
+  sidebarShowOpalLauncherModsDescription: Показати ярлик «Opal Launcher Mods» у бічній панелі
   advancedJavaOptions: Розширені параметри Java
   advancedSettings: Розширені налаштування
   advancedSettingsHint: Небезпечна зона - скидання або керування даними лаунчера
@@ -1393,6 +1394,7 @@ shared:
 sidebar:
   pin: Закріпити
   unpin: Відкріпити
+  opalLauncherMods: Моди Opal Launcher
 sortBy:
   alphabetAsc: Сортувати за алфавітом (за зростанням)
   alphabetDesc: Сортувати за алфавітом (за спаданням)

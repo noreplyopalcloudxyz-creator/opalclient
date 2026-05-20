@@ -1134,6 +1134,7 @@ setting:
     loadConfirmMessage: Kaydedilmiş bir temayı yüklemek mevcut temayı değiştirir. Gerekirse yedekleyin.
     loadTheme: Tema yükle
   about: Hakkında
+  sidebarShowOpalLauncherModsDescription: Kenar çubukta "Opal Başlatıcı Modları" kısayolunu göster
   advancedJavaOptions: Gelişmiş Java Seçenekleri
   advancedSettings: Gelişmiş Ayarlar
   advancedSettingsHint: Tehlike bölgesi - başlatıcı verilerini sıfırla veya yönet
@@ -1398,6 +1399,7 @@ shared:
 sidebar:
   pin: Sabitle
   unpin: Sabitlemeyi kaldır
+  opalLauncherMods: Opal Başlatıcı Modları
 sortBy:
   alphabetAsc: Alfabeye göre sırala (artan)
   alphabetDesc: Alfabeye göre sırala (azalan)

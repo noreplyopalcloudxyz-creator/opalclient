@@ -2,6 +2,7 @@ import { InjectionKey, Ref } from 'vue'
 import { useLocalStorageCacheStringValue, useLocalStorageCacheInt, useLocalStorageCacheBool } from './cache'
 import { useLocalStorage } from '@vueuse/core'
 import { injection } from '@/util/inject'
+import { useSettings } from './setting'
 
 export type SidebarPosition = 'left' | 'right' | 'top' | 'bottom'
 export type SidebarStyle = 'classic' | 'notch'
@@ -14,6 +15,7 @@ export interface SidebarSettings {
   scale: Ref<number>
   autoHide: Ref<boolean>
   showOnlyPinned: Ref<boolean>
+  showOpalLauncherMods: Ref<boolean>
   pinnedInstances: Ref<string[]>
 }
 
@@ -26,6 +28,9 @@ export function useSidebarSettings(): SidebarSettings {
   const scale = useLocalStorageCacheInt('sidebar_scale', 100)
   const autoHide = useLocalStorageCacheBool('sidebar_autoHide', true)
   const showOnlyPinned = useLocalStorageCacheBool('sidebar_showOnlyPinned', false)
+  // Prefer persisted setting from global settings when available
+  const settings = useSettings()
+  const showOpalLauncherMods = settings.sidebarShowOpalLauncherMods
   const pinnedInstances = useLocalStorage<string[]>('sidebar_pinnedInstances', [])
 
   return {
@@ -35,6 +40,7 @@ export function useSidebarSettings(): SidebarSettings {
     scale,
     autoHide,
     showOnlyPinned,
+    showOpalLauncherMods,
     pinnedInstances,
   }
 }

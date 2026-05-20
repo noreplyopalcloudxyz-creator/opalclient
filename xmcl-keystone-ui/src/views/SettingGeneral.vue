@@ -76,6 +76,80 @@
       <v-chip v-if="developerMode" size="x-small" color="warning" class="ml-2">{{ t('setting.devModeLabel') }}</v-chip>
     </SettingItemSwitcher>
 
+    <v-divider class="my-3" />
+    <SettingCard>
+      <SettingItemSwitcher
+        v-model="opalClientEnabled"
+        title="Enable Opal Client built-in overlay"
+        description="Inject the built-in Opal Client mod into launched Minecraft instances."
+        icon="extension"
+      />
+      <v-divider class="my-3" />
+      <SettingItem
+        v-if="opalClientEnabled"
+        long-action
+        title="Overlay keybind"
+        description="Press this key in-game to open the Opal Client menu overlay."
+      >
+        <template #action>
+          <v-text-field
+            v-model="opalClientKeybind"
+            variant="outlined"
+            density="compact"
+            hide-details
+            placeholder="RIGHT_SHIFT"
+          />
+        </template>
+      </SettingItem>
+      <SettingItem
+        v-if="opalClientEnabled"
+        long-action
+        title="Enabled modules"
+        description="Comma-separated Opal Client modules to activate automatically."
+      >
+        <template #action>
+          <v-text-field
+            v-model="opalClientModulesText"
+            variant="outlined"
+            density="compact"
+            hide-details
+            placeholder="fps, coords, hud"
+          />
+        </template>
+      </SettingItem>
+      <SettingItem
+        v-if="opalClientEnabled"
+        long-action
+        title="HUD layout"
+        description="Persisted layout state for the in-game HUD editor."
+      >
+        <template #action>
+          <v-text-field
+            v-model="opalClientHudLayout"
+            variant="outlined"
+            density="compact"
+            hide-details
+            placeholder="{...}"
+          />
+        </template>
+      </SettingItem>
+      <SettingItemSwitcher
+        v-if="opalClientEnabled"
+        v-model="opalClientShowOverlay"
+        title="Show Opal overlay"
+        description="Display the Opal Client overlay when the game starts."
+        icon="visibility"
+      />
+      <OpalModDiscovery v-if="opalClientEnabled" />
+      <v-divider class="my-3" />
+      <SettingItemSwitcher
+        v-model="showOpalLauncherMods"
+        :title="t('sidebar.opalLauncherMods')"
+        description="Show the Opal Launcher Mods shortcut in the sidebar"
+        icon="extension"
+      />
+    </SettingCard>
+
     <!-- Streamer Mode -->
     <v-divider class="my-3" />
     <SettingItemSwitcher
@@ -103,6 +177,7 @@ import SettingCard from '@/components/SettingCard.vue'
 import SettingItem from '@/components/SettingItem.vue'
 import SettingItemSelect from '@/components/SettingItemSelect.vue'
 import SettingItemSwitcher from '@/components/SettingItemSwitcher.vue'
+import OpalModDiscovery from '@/components/OpalModDiscovery.vue'
 import { kCriticalStatus } from '@/composables/criticalStatus'
 import { useGetDataDirErrorText } from '@/composables/dataRootErrors'
 import { kEnvironment } from '@/composables/environment'
@@ -123,9 +198,25 @@ const {
   enableDiscord,
   locales: rawLocales,
   enableDedicatedGPUOptimization,
+  opalClientEnabled,
+  opalClientKeybind,
+  opalClientModules,
+  opalClientHudLayout,
+  opalClientShowOverlay,
 } = useSettings()
+// Use persisted setting from useSettings
+const { sidebarShowOpalLauncherMods: showOpalLauncherMods } = useSettings()
 const { t } = useI18n()
 const locales = computed(() => rawLocales.value.map(({ locale, name }) => ({ text: name, value: locale })))
+const opalClientModulesText = computed({
+  get: () => opalClientModules.value.join(', '),
+  set: (value: string) => {
+    opalClientModules.value = value
+      .split(',')
+      .map((item) => item.trim())
+      .filter((item) => item)
+  },
+})
 const replaceNativeItems = computed(() => [
   {
     text: t('shared.disable'),

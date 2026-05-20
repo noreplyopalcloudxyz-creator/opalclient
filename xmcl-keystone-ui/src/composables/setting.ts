@@ -197,6 +197,34 @@ export function useSettings() {
     get: () => state.value?.discordPresence ?? false,
     set: (v) => state.value?.discordPresenceSet(v),
   })
+  const opalClientEnabled = computed({
+    get: () => state.value?.opalClientEnabled ?? false,
+    set: (v) => state.value?.opalClientEnabledSet(v),
+  })
+  const opalClientKeybind = computed({
+    get: () => state.value?.opalClientKeybind ?? 'RIGHT_SHIFT',
+    set: (v) => state.value?.opalClientKeybindSet(v),
+  })
+  const opalClientModules = computed({
+    get: () => state.value?.opalClientModules ?? [],
+    set: (v) => state.value?.opalClientModulesSet(v),
+  })
+  const opalClientModuleStatuses = computed({
+    get: () => state.value?.opalClientModuleStatuses ?? {},
+    set: (v) => state.value?.opalClientModuleStatusesSet(v),
+  })
+  const opalClientHudLayout = computed({
+    get: () => state.value?.opalClientHudLayout ?? '',
+    set: (v) => state.value?.opalClientHudLayoutSet(v),
+  })
+  const opalClientShowOverlay = computed({
+    get: () => state.value?.opalClientShowOverlay ?? true,
+    set: (v) => state.value?.opalClientShowOverlaySet(v),
+  })
+  const sidebarShowOpalLauncherMods = computed({
+    get: () => state.value?.sidebarShowOpalLauncherMods ?? true,
+    set: (v) => state.value?.sidebarShowOpalLauncherModsSet(v),
+  })
   const apiSets = computed(() => state.value?.apiSets || [])
 
   onMounted(() => {
@@ -243,6 +271,13 @@ export function useSettings() {
     apiSetsPreference,
     apiSets,
     disableTelemetry,
+    opalClientEnabled,
+    opalClientKeybind,
+    opalClientModules,
+    opalClientModuleStatuses,
+    opalClientHudLayout,
+    opalClientShowOverlay,
+    sidebarShowOpalLauncherMods,
     error,
     isValidating,
   }

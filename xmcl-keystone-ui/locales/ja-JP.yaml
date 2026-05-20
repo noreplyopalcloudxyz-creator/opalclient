@@ -1106,6 +1106,7 @@ setting:
     loadConfirmMessage: 保存済みテーマを読み込むと現在のテーマが置き換わります。必要ならバックアップしてください。
     loadTheme: テーマを読み込む
   about: について
+  sidebarShowOpalLauncherModsDescription: サイドバーに「Opal ランチャーのMod」ショートカットを表示します
   aboutBmclDescription: BMCL APIは、中国本土のユーザーに便利なダウンロードを提供します
   aboutContributors: 🧑‍💻 コントリビューター 🧑‍💻
   aboutDenoDescription: XMCLはサーバーレスJavaScriptアプリケーション用のDeno Deployの手間のかかからないプラットフォームを活用しています
@@ -1373,6 +1374,7 @@ shared:
 sidebar:
   pin: ピン留めする
   unpin: 固定を解除する
+  opalLauncherMods: Opal ランチャーのMod
 sortBy:
   alphabetAsc: アルファベットでソート（昇順）
   alphabetDesc: アルファベットでソート（下降）

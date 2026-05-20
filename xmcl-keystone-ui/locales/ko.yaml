@@ -1068,6 +1068,7 @@ setting:
     loadConfirmMessage: 저장된 테마를 불러오면 현재 테마가 교체됩니다. 필요하면 백업하세요.
     loadTheme: 테마 불러오기
   about: 정보
+  sidebarShowOpalLauncherModsDescription: 사이드바에 "Opal 런처 모드" 바로가기를 표시합니다
   aboutBmclDescription: BMCL API는 중국 본토의 사용자를 위한 편리한 다운로드를 제공합니다
   aboutContributors: 🧑‍💻 기여자 🧑‍💻
   aboutDenoDescription: XMCL은 서버리스 JavaScript 애플리케이션을 위해 Deno Deploy의 간편한 플랫폼을 활용합니다
@@ -1333,6 +1334,7 @@ shared:
 sidebar:
   pin: 고정
   unpin: 고정 해제
+  opalLauncherMods: Opal 런처 모드
 sortBy:
   alphabetAsc: 알파벳순 정렬 (오름차순)
   alphabetDesc: 알파벳순 정렬 (내림차순)

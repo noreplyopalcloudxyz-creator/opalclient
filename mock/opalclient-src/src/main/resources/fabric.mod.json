@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "opalclient",
+  "version": "0.0.1",
+  "name": "Opal Client (mock)",
+  "description": "Minimal Opal Client mock mod used for testing launcher injection and config reading.",
+  "authors": ["Opal Team"],
+  "entrypoints": {
+    "client": ["xyz.opalclient.OpalClientMod"]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "fabric": "*"
+  }
+}

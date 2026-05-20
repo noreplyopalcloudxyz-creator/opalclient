@@ -1127,6 +1127,7 @@ setting:
     loadConfirmMessage: Caricare un tema salvato sostituirà il tema attuale. Fai un backup se necessario.
     loadTheme: Carica tema
   about: Di
+  sidebarShowOpalLauncherModsDescription: Mostra il collegamento "Mod del Opal Launcher" nella barra laterale
   aboutBmclDescription: >-
     L'API BMCL fornisce download convenienti per gli utenti nella Cina continentale
   aboutContributors: 🧑‍💻 Collaboratori 🧑‍💻
@@ -1409,6 +1410,7 @@ shared:
 sidebar:
   pin: Fissa
   unpin: Sblocca
+  opalLauncherMods: Mod del Opal Launcher
 sortBy:
   alphabetAsc: Ordina per alfabeto (ascendente)
   alphabetDesc: Ordina per alfabeto (discendente)

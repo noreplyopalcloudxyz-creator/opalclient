@@ -1132,6 +1132,7 @@ setting:
     loadConfirmMessage: Сақталған тақырыпты жүктеу ағымдағы тақырыпты алмастырады. Қажет болса, сақтық көшірме жасаңыз.
     loadTheme: Тақырыпты жүктеу
   about: Туралы
+  sidebarShowOpalLauncherModsDescription: Бүйірлік мәзірде "Opal Launcher модтары" қысқаша жолын көрсету
   aboutBmclDescription: BMCL API қытай материктік пайдаланушылар үшін ыңғайлы жүктемелерді ұсынады
   aboutContributors: 🧑‍💻 Ымдастырушылар 🧑‍💻
   aboutDenoDescription: >-
@@ -1403,6 +1404,7 @@ shared:
 sidebar:
   pin: Бекіту
   unpin: Бекітуді алып тастау
+  opalLauncherMods: Opal Launcher модтары
 sortBy:
   alphabetAsc: Әліпби бойынша (өсу)
   alphabetDesc: Әліпби бойынша (кему)

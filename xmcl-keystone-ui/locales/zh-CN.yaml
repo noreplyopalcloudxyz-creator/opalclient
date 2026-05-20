@@ -1162,6 +1162,7 @@ setting:
     saveDialogTitle: 保存主题
     themeName: 主题名称
     themeNameHint: 用于存储此主题的名称
+  sidebarShowOpalLauncherModsDescription: 在侧边栏显示 “Opal 启动器 模组” 快捷方式
     loadConfirmTitle: 替换当前主题？
     loadConfirmMessage: 加载已保存的主题将替换当前主题，请先备份。
     loadTheme: 加载主题
@@ -1442,6 +1443,7 @@ shared:
 sidebar:
   pin: 固定
   unpin: 取消固定
+  opalLauncherMods: Opal 启动器 模组
 sortBy:
   alphabetAsc: 按字母（上升）排序
   alphabetDesc: 按字母（下降）排序

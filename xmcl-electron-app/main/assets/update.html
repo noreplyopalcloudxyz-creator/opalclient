@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Opal Launcher Update</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#5eead4;--muted:#94a3b8;color-scheme:dark}
+    body{margin:0;font-family:Inter,Segoe UI,Roboto,system-ui,Arial;background:linear-gradient(180deg,#071023 0%,#071228 100%);color:#e6eef6}
+    .card{width:560px;margin:28px auto;padding:20px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+    h1{margin:0 0 8px;font-size:20px}
+    p.muted{color:var(--muted);margin:0 0 12px}
+    .changelog{max-height:140px;overflow:auto;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);margin-bottom:12px}
+    .progress{height:12px;background:rgba(255,255,255,0.04);border-radius:8px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#60a5fa);width:0%}
+    .row{display:flex;gap:8px;align-items:center}
+    button{background:var(--accent);border:none;padding:8px 12px;border-radius:8px;color:#062023;font-weight:600;cursor:pointer}
+    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+    .meta{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+    .info-row{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}
+    .tag{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.05);font-size:13px;color:#cbd5e1}
+    .tag strong{color:#e2e8f0}
+    button{background:var(--accent);border:none;padding:10px 14px;border-radius:10px;color:#062023;font-weight:700;cursor:pointer;transition:transform .15s ease,filter .15s ease}
+    button:hover{transform:translateY(-1px);filter:brightness(1.05)}
+    button:disabled{opacity:.55;cursor:not-allowed;transform:none}
+    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--muted)}
+    .error{color:#ffb4b4;background:rgba(255,0,0,0.08);padding:10px;border-radius:10px;margin-bottom:12px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="meta">
+      <div>
+        <h1 id="title">Opal Launcher Update</h1>
+        <p class="muted" id="subtitle">Checking for updates…</p>
+      </div>
+      <div id="versionInfo"></div>
+    </div>
+    <div class="info-row">
+      <span class="tag">Channel: <strong id="channel">stable</strong></span>
+      <span class="tag">Installed: <strong id="currentVersion">0.0.0</strong></span>
+    </div>
+
+    <div id="errorBox" style="display:none" class="error"></div>
+
+    <div class="changelog" id="changelog"></div>
+
+    <div class="progress" style="margin-bottom:10px"><i id="progressBar"></i></div>
+    <div class="row" style="justify-content:flex-end">
+      <button id="retry" class="ghost" style="display:none">Retry</button>
+      <button id="install" style="display:none">Download & Install</button>
+      <button id="closeBtn" class="ghost">Close</button>
+    </div>
+  </div>
+  <script src="./updateRenderer.js"></script>
+</body>
+</html>

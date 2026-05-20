@@ -233,6 +233,23 @@ export function useSettingsSearchItems() {
       },
     })
 
+    // Opal Launcher Mods sidebar visibility
+    list.push({
+      kind: 'switch',
+      id: 'setting.sidebarShowOpalLauncherMods',
+      title: t('sidebar.opalLauncherMods'),
+      description: t('setting.sidebarShowOpalLauncherModsDescription'),
+      icon: 'extension',
+      group: groupGeneral.value,
+      keywords: 'opal opalclient mods sidebar launcher',
+      get value() {
+        return s.sidebarShowOpalLauncherMods ?? true
+      },
+      set value(v: boolean) {
+        s.sidebarShowOpalLauncherModsSet(v)
+      },
+    })
+
     list.push({
       kind: 'select',
       id: 'setting.replaceNative',

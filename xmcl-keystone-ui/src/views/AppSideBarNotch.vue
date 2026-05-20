@@ -89,6 +89,16 @@
           @click="goMultiplayer"
         />
 
+        <!-- Opal Launcher Mods -->
+        <AppSideBarNotchItem
+          v-if="showOpalLauncherMods"
+          data-testid="nav-opal-mods"
+          icon="extension"
+          :icon-size="iconSize"
+          :tooltip="() => ({ text: t('sidebar.opalLauncherMods'), direction: tooltipDirection })"
+          to="/opal-launcher-mods"
+        />
+
         <div class="sidebar-notch__divider moveable" />
 
         <!-- Settings -->
@@ -134,7 +144,7 @@ const { blurSidebar, sideBarColor } = injection(kTheme)
 const { instances } = injection(kInstances)
 const { state } = injection(kSettingsState)
 const { gameProfile } = injection(kUserContext)
-const { position, align, scale, autoHide } = useInjectSidebarSettings()
+const { position, align, scale, autoHide, showOpalLauncherMods } = useInjectSidebarSettings()
 const { show: showAddInstance } = useDialog(AddInstanceDialogKey)
 
 const { t } = useI18n()

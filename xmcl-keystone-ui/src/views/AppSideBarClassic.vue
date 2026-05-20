@@ -71,6 +71,17 @@
       </AppSideBarItem>
 
       <AppSideBarItem
+        v-if="showOpalLauncherMods"
+        data-testid="nav-opal-mods"
+        v-shared-tooltip.right="() => t('sidebar.opalLauncherMods')"
+        to="/opal-launcher-mods"
+      >
+        <v-icon class="sidebar-item__icon" :size="23">
+          extension
+        </v-icon>
+      </AppSideBarItem>
+
+      <AppSideBarItem
         data-testid="nav-settings"
         v-shared-tooltip.right="() => t('setting.name', 2)"
         to="/setting"
@@ -188,7 +199,7 @@ import AppSideBarItem from './AppSideBarItem.vue'
 const { blurSidebar, sideBarColor } = injection(kTheme)
 const { state } = injection(kSettingsState)
 const { gameProfile } = injection(kUserContext)
-const { position } = useInjectSidebarSettings()
+const { position, showOpalLauncherMods } = useInjectSidebarSettings()
 
 const isHorizontal = computed(() => position.value === 'top' || position.value === 'bottom')
 

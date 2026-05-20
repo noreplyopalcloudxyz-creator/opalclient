@@ -1124,6 +1124,7 @@ setting:
     loadConfirmMessage: Wczytanie zapisanego motywu zastąpi bieżący. W razie potrzeby zrób kopię zapasową.
     loadTheme: Wczytaj motyw
   about: O
+  sidebarShowOpalLauncherModsDescription: Pokaż skrót "Mody Opal Launcher" w pasku bocznym
   advancedJavaOptions: Zaawansowane opcje Java
   advancedSettings: Ustawienia zaawansowane
   advancedSettingsHint: Strefa zagrożenia - resetuj lub zarządzaj danymi launchera
@@ -1396,6 +1397,7 @@ shared:
 sidebar:
   pin: Przypnij
   unpin: Odepnij
+  opalLauncherMods: Mody Opal Launcher
 sortBy:
   alphabetAsc: Sortuj według alfabetu (rosnące)
   alphabetDesc: Sortuj według alfabetu (zejście)

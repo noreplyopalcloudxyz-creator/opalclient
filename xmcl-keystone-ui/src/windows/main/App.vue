@@ -65,6 +65,7 @@ import { useCommandPaletteHotkey } from '@/composables/commandPalette'
 import { useDefaultErrorHandler } from '@/composables/errorHandler'
 import { kInstance } from '@/composables/instance'
 import { kLaunchButton, useLaunchButton } from '@/composables/launchButton'
+import { useRightShiftModMenuHotkey } from '@/composables/rightShiftModMenu'
 import { kLocalizedContent, useLocalizedContentControl } from '@/composables/localizedContent'
 import { useNotifier } from '@/composables/notifier'
 import { useDialog } from '@/composables/dialog'
@@ -128,6 +129,7 @@ provide(UserSkinRenderPaused, computed(() => !userProfileDialogShown.value && ro
 
 // Bind Ctrl/Cmd+K to toggle the command palette.
 useCommandPaletteHotkey()
+useRightShiftModMenuHotkey()
 
 const defaultColor = useInstanceGroupDefaultColor()
 

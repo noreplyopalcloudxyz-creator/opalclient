@@ -22,6 +22,12 @@ export class Settings implements SettingSchema {
   globalShowLog = false
   globalEnv: Record<string, string> = {}
   globalResolution: { width?: number; height?: number; fullscreen?: boolean } = {}
+  opalClientEnabled = false
+  opalClientKeybind = 'RIGHT_SHIFT'
+  opalClientModules: string[] = []
+  opalClientModuleStatuses: Record<string, 'pending' | 'installed' | 'failed'> = {}
+  opalClientHudLayout = ''
+  opalClientShowOverlay = true
   discordPresence = false
   developerMode = false
   disableTelemetry = false
@@ -99,6 +105,12 @@ export class Settings implements SettingSchema {
     this.globalDisableAuthlibInjector = config.globalDisableAuthlibInjector
     this.globalPreExecuteCommand = config.globalPreExecuteCommand
     this.globalEnv = config.globalEnv
+    this.opalClientEnabled = config.opalClientEnabled
+    this.opalClientKeybind = config.opalClientKeybind
+    this.opalClientModules = config.opalClientModules
+    this.opalClientModuleStatuses = config.opalClientModuleStatuses
+    this.opalClientHudLayout = config.opalClientHudLayout
+    this.opalClientShowOverlay = config.opalClientShowOverlay
     this.discordPresence = config.discordPresence
     this.developerMode = config.developerMode
     this.disableTelemetry = config.disableTelemetry
@@ -212,6 +224,30 @@ export class Settings implements SettingSchema {
 
   globalResolutionSet(resolution: { width?: number; height?: number; fullscreen?: boolean }) {
     this.globalResolution = resolution
+  }
+
+  opalClientEnabledSet(enabled: boolean) {
+    this.opalClientEnabled = enabled
+  }
+
+  opalClientKeybindSet(keybind: string) {
+    this.opalClientKeybind = keybind
+  }
+
+  opalClientModulesSet(modules: string[]) {
+    this.opalClientModules = modules
+  }
+
+  opalClientModuleStatusesSet(statuses: Record<string, 'pending' | 'installed' | 'failed'>) {
+    this.opalClientModuleStatuses = statuses
+  }
+
+  opalClientHudLayoutSet(layout: string) {
+    this.opalClientHudLayout = layout
+  }
+
+  opalClientShowOverlaySet(enabled: boolean) {
+    this.opalClientShowOverlay = enabled
   }
 
   diskFullErrorSet(diskFullError: boolean) {

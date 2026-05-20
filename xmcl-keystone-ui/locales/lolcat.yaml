@@ -1118,6 +1118,7 @@ setting:
     loadConfirmMessage: LOADING SAVED TEEM WILL REPLACE CURRENT TEEM. BACKUP IF U NEED.
     loadTheme: LOAD TEEM
   about: ABOUT
+  sidebarShowOpalLauncherModsDescription: SHOW TEH "OPAL LAUNCHER MODZ" SHORTCUT IN DA SIDEBAR
   aboutBmclDescription: BMCL API PROVIDEZ CONVENEENT DOWNLODZ FUR USRZ IN CHINEEZ MAINLUND
   aboutContributors: 🧑‍💻 CONTRUBUTORS 🧑‍💻
   aboutDenoDescription: >-
@@ -1388,6 +1389,7 @@ shared:
 sidebar:
   pin: STIK IT
   unpin: UNSTIK IT
+  opalLauncherMods: OPAL LAUNCHER MODZ
 sortBy:
   alphabetAsc: SORT BY ALPHABET (ASCENDING)
   alphabetDesc: SORT BY ALPHABET (DESCENDING)

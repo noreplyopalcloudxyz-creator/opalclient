@@ -1142,6 +1142,7 @@ setting:
     loadConfirmMessage: Het laden van een opgeslagen thema vervangt het huidige thema. Maak indien nodig een back-up.
     loadTheme: Thema laden
   about: Over
+  sidebarShowOpalLauncherModsDescription: Toon de snelkoppeling "Opal Launcher-mods" in de zijbalk
   aboutBmclDescription: BMCL API biedt handige downloads voor gebruikers in Chinees Vasteland
   aboutContributors: 🧑‍💻 Bijdragers 🧑‍💻
   aboutDenoDescription: >-
@@ -1413,6 +1414,7 @@ shared:
 sidebar:
   pin: Vastzetten
   unpin: Losmaken
+  opalLauncherMods: Opal Launcher-mods
 sortBy:
   alphabetAsc: Sorteren op alfabet (oplopend)
   alphabetDesc: Sorteren op alfabet (aflopend)
